@@ -1,0 +1,47 @@
+stages:
+  - test
+  - build
+  - deploy
+
+test:
+  stage: test
+  image: python:3.10
+  before_script:
+    - echo "🟢 Starting test stage at $(date)"
+    - pip install -r requirements.txt
+    - pip install pytest
+  script:
+    - |
+      START_TIME=$(date +%s)
+      pytest
+      END_TIME=$(date +%s)
+      echo "✅ Test completed at $(date)"
+      echo "⏱️ Duration: $((END_TIME - START_TIME)) seconds"
+
+build:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  before_script:
+    - echo "🟢 Starting build stage at $(date)"
+  script:
+    - |
+      START_TIME=$(date +%s)
+      docker build -t calculator-app .
+      END_TIME=$(date +%s)
+      echo "✅ Build completed at $(date)"
+      echo "⏱️ Duration: $((END_TIME - START_TIME)) seconds"
+
+deploy:
+  stage: deploy
+  image: alpine:latest
+  before_script:
+    - echo "🟢 Starting deploy stage at $(date)"
+  script:
+    - |
+      START_TIME=$(date +%s)
+      echo "📦 Deployment placeholder"
+      END_TIME=$(date +%s)
+      echo "✅ Deploy completed at $(date)"
+      echo "⏱️ Duration: $((END_TIME - START_TIME)) seconds"
