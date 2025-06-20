@@ -1,3 +1,5 @@
+image: python:3.9  # or 3.10, 3.11
+
 stages:
   - build
   - test
@@ -22,7 +24,7 @@ deploy:
   stage: deploy
   script:
     - echo ">>> Deploy started at $(date)"
-    - echo "Deployment stage placeholder (will be replaced in Phase 3)"
+    - echo "Deployment placeholder"
     - echo ">>> Deploy completed at $(date)"
   only:
     - master
